@@ -24,7 +24,7 @@ dataset = 'sample_train-item-views.csv'
 if opt.dataset == 'diginetica':
     dataset = 'train-item-views.csv'
 elif opt.dataset =='yoochoose':
-    dataset = 'yoochoose-clicks.dat'
+    dataset = 'yoochoose/yoochoose-clicks.dat'
 
 
 print("-- Starting @ %ss" % datetime.datetime.now())

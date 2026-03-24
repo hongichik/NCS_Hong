@@ -8,6 +8,7 @@ srgnn_env/
 yoochoose-*.dat
 */yoochoose-*.dat
 **/yoochoose-*.dat
+*.txt
 
 # Python cache files
 __pycache__/
