@@ -13,6 +13,7 @@ import torch
 from torch import nn
 from torch.nn import Module, Parameter
 import torch.nn.functional as F
+import logging
 
 
 class GNN(Module):
@@ -123,8 +124,8 @@ def forward(model, i, data):
 
 
 def train_test(model, train_data, test_data):
-    model.scheduler.step()
-    print('start training: ', datetime.datetime.now())
+    logger = logging.getLogger(__name__)
+    logger.info(f'start training: {datetime.datetime.now()}')
     model.train()
     total_loss = 0.0
     slices = train_data.generate_batch(model.batch_size)
@@ -137,10 +138,10 @@ def train_test(model, train_data, test_data):
         model.optimizer.step()
         total_loss += loss
         if j % int(len(slices) / 5 + 1) == 0:
-            print('[%d/%d] Loss: %.4f' % (j, len(slices), loss.item()))
-    print('\tLoss:\t%.3f' % total_loss)
+            logger.info(f'[{j}/{len(slices)}] Loss: {loss.item():.4f}')
+    logger.info(f'\tLoss:\t{total_loss:.3f}')
 
-    print('start predicting: ', datetime.datetime.now())
+    logger.info(f'start predicting: {datetime.datetime.now()}')
     model.eval()
     hit, mrr = [], []
     slices = test_data.generate_batch(model.batch_size)
@@ -156,4 +157,5 @@ def train_test(model, train_data, test_data):
                 mrr.append(1 / (np.where(score == target - 1)[0][0] + 1))
     hit = np.mean(hit) * 100
     mrr = np.mean(mrr) * 100
+    model.scheduler.step()
     return hit, mrr

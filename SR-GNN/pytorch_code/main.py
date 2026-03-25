@@ -9,6 +9,8 @@ Created on July, 2018
 import argparse
 import pickle
 import time
+import logging
+from datetime import datetime
 from utils import build_graph, Data, split_validation
 from model import trans_to_cuda, SessionGraph, train_test
 
@@ -38,7 +40,20 @@ parser.add_argument('--nonhybrid', action='store_true', help='only use the globa
 parser.add_argument('--validation', action='store_true', help='validation')
 parser.add_argument('--valid_portion', type=float, default=0.1, help='split the portion of training set as validation set')
 opt = parser.parse_args()
-print(opt)
+
+# Cấu hình logging để ghi vào file
+log_filename = f"training_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(log_filename),
+        logging.StreamHandler()  # Vẫn hiển thị trên console nếu muốn
+    ]
+)
+logger = logging.getLogger(__name__)
+
+logger.info(f"Arguments: {opt}")
 
 
 def main():
@@ -77,8 +92,8 @@ def main():
     best_epoch = [0, 0]
     bad_counter = 0
     for epoch in range(opt.epoch):
-        print('-------------------------------------------------------')
-        print('epoch: ', epoch)
+        logger.info('-------------------------------------------------------')
+        logger.info(f'epoch: {epoch}')
         hit, mrr = train_test(model, train_data, test_data)
         flag = 0
         if hit >= best_result[0]:
@@ -89,14 +104,15 @@ def main():
             best_result[1] = mrr
             best_epoch[1] = epoch
             flag = 1
-        print('Best Result:')
-        print('\tRecall@20:\t%.4f\tMMR@20:\t%.4f\tEpoch:\t%d,\t%d'% (best_result[0], best_result[1], best_epoch[0], best_epoch[1]))
+        logger.info('Best Result:')
+        logger.info(f'\tRecall@20:\t{best_result[0]:.4f}\tMMR@20:\t{best_result[1]:.4f}\tEpoch:\t{best_epoch[0]},\t{best_epoch[1]}')
         bad_counter += 1 - flag
         if bad_counter >= opt.patience:
             break
-    print('-------------------------------------------------------')
+    logger.info('-------------------------------------------------------')
     end = time.time()
-    print("Run time: %f s" % (end - start))
+    logger.info(f"Run time: {end - start:.6f} s")
+    logger.info(f"Log saved to: {log_filename}")
 
 
 if __name__ == '__main__':

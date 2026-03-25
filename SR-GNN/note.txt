@@ -1,2 +1,3 @@
 source srgnn_env/bin/activate
 python3 main.py --dataset sample
+python3 main.py --dataset yoochoose1_64
