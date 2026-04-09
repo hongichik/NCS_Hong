@@ -1,5 +1,0 @@
-2026-03-30 14:10:54,248 - INFO - Arguments: Namespace(dataset='yoochoose1_64', batchSize=100, hiddenSize=100, epoch=30, lr=0.001, lr_dc=0.1, lr_dc_step=3, l2=1e-05, step=1, patience=10, nonhybrid=False, validation=False, valid_portion=0.1)
-2026-03-30 14:11:16,502 - INFO - -------------------------------------------------------
-2026-03-30 14:11:16,510 - INFO - epoch: 0
-2026-03-30 14:11:16,510 - INFO - start training: 2026-03-30 14:11:16.510303
-2026-03-30 14:11:18,515 - INFO - [0/3699] Loss: 10.5391

@@ -10,6 +10,79 @@ yoochoose-*.dat
 **/yoochoose-*.dat
 *.txt
 
+# Dataset directories - NEVER push to GitHub
+dataset/
+datasets/
+*/dataset/
+*/datasets/
+**/dataset/
+**/datasets/
+data/
+*/data/
+**/data/
+
+# Dataset file extensions
+*.csv
+*.tsv
+*.json
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.mat
+*.npz
+*.npy
+*.parquet
+*.feather
+*.arrow
+
+# Preprocessed data files
+*.train.inter
+*.valid.inter
+*.test.inter
+*.item
+*.user
+*.kg
+*.link
+*.net
+*.rating
+*.review
+
+# Machine Learning model files
+*.model
+*.pth
+*.pt
+*.ckpt
+*.checkpoint
+
+# Training logs and outputs
+*.log
+training_log_*.log
+*/training_log_*.log
+**/training_log_*.log
+log/
+logs/
+*/log/
+*/logs/
+**/log/
+**/logs/
+
+# Pickle files (often contain processed data)
+*.pkl
+*.pickle
+*/saved/
+**/saved/
+
+# Specific dataset names
+*yoochoose*
+*diginetica*
+*tmall*
+*nowplaying*
+*retailrocket*
+*ml-100k*
+*ml-1m*
+*amazon*
+
 # Python cache files
 __pycache__/
 *.py[cod]
